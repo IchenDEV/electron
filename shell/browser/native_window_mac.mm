@@ -1236,7 +1236,10 @@ void NativeWindowMac::SetVibrancy(const std::string& type) {
 
     // Make frameless Vibrant windows have rounded corners.
     if (!has_frame() && !is_modal()) {
-      CGFloat radius = 5.0f;  // default corner radius
+      CGFloat radius = 5.0f;
+      if (@available(macOS 11.0, *)) {
+        radius = 10.0f;
+      }
       CGFloat dimension = 2 * radius + 1;
       NSSize size = NSMakeSize(dimension, dimension);
       NSImage* maskImage = [NSImage imageWithSize:size
